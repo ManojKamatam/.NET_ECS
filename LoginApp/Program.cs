@@ -21,7 +21,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Remove HTTPS redirection since we're using HTTP on port 80
+// app.UseHttpsRedirection();  // Comment out or remove this line
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
@@ -30,5 +32,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
+
+// Configure Kestrel to listen on port 80
+builder.WebHost.UseUrls("http://*:80");
 
 app.Run();
